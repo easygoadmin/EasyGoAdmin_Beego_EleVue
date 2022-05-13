@@ -23,7 +23,10 @@
 
 package vo
 
-import "easygoadmin/app/models"
+import (
+	"easygoadmin/app/models"
+	"time"
+)
 
 // 会员列表Vo
 type MemberListVo struct {
@@ -37,20 +40,20 @@ type MemberListVo struct {
 
 // 会员信息Vo
 type MemberInfoVo struct {
-	Id          int      `json:"id"`
-	Username    string   `json:"username"`
-	Password    string   `json:"password"`
-	MemberLevel int      `json:"memberLevel"`
-	Realname    string   `json:"realname"`
-	Nickname    string   `json:"nickname"`
-	Gender      int      `json:"gender"`
-	Avatar      string   `json:"avatar"`
-	Birthday    int64    `json:"birthday"`
-	Address     string   `json:"address"`
-	Intro       string   `json:"intro"`
-	Signature   string   `json:"signature"`
-	Device      int      `json:"device"`
-	Source      int      `json:"source"`
-	Status      int      `json:"status"`
-	City        []string `json:"city"` // 省市区
+	Id          int       `json:"id"`
+	Username    string    `json:"username"`
+	Password    string    `json:"password"`
+	MemberLevel int       `json:"memberLevel"`
+	Realname    string    `json:"realname"`
+	Nickname    string    `json:"nickname"`
+	Gender      int       `json:"gender"`
+	Avatar      string    `json:"avatar"`
+	Birthday    time.Time `json:"birthday"`
+	Address     string    `json:"address"`
+	Intro       string    `json:"intro"`
+	Signature   string    `json:"signature"`
+	Device      int       `json:"device"`
+	Source      int       `json:"source"`
+	Status      int       `json:"status"`
+	City        []string  `json:"city"` // 省市区
 }

@@ -30,7 +30,6 @@ import (
 	"easygoadmin/app/vo"
 	"easygoadmin/utils"
 	"easygoadmin/utils/common"
-	"easygoadmin/utils/gconv"
 	"github.com/gookit/validate"
 )
 
@@ -80,7 +79,7 @@ func (ctl *UserController) Detail() {
 	id, _ := ctl.GetInt(":id", 0)
 	if id > 0 {
 		// 编辑
-		info := &models.User{Id: gconv.Int(id)}
+		info := &models.User{Id: id}
 		err := info.Get()
 		if err != nil {
 			ctl.JSON(common.JsonResult{
@@ -91,7 +90,6 @@ func (ctl *UserController) Detail() {
 		}
 
 		var userInfo = &vo.UserInfoVo{}
-		//userInfo = *info
 		utils.StructCopy(info, userInfo)
 		// 头像
 		userInfo.Avatar = utils.GetImageUrl(info.Avatar)

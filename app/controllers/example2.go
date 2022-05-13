@@ -24,7 +24,7 @@
 /**
  * 演示二管理-控制器
  * @author 半城风雨
- * @since 2022-04-15
+ * @since 2022-05-13
  * @File : example2
  */
 package controllers
@@ -41,7 +41,7 @@ import (
 
 var Example2 = new(Example2Controller)
 
-type Example2Controller struct {
+type Example2Controller struct{
 	BaseController
 }
 
@@ -77,10 +77,10 @@ func (ctl *Example2Controller) List() {
 
 func (ctl *Example2Controller) Detail() {
 	// 记录ID
-	id, _ := ctl.GetInt(":id", 0)
+	id, _ := ctl.GetInt("id", 0)
 	if id > 0 {
 		// 编辑
-		info := &models.Example{Id: id}
+		info := &models.Example2{Id: id}
 		err := info.Get()
 		if err != nil {
 			ctl.JSON(common.JsonResult{
@@ -93,6 +93,11 @@ func (ctl *Example2Controller) Detail() {
 		// 属性拷贝
 		var example2InfoVo = &vo.Example2InfoVo{}
 		utils.StructCopy(info, example2InfoVo)
+
+		
+		
+		
+		
 
 		// 返回结果
 		ctl.JSON(common.JsonResult{
@@ -165,7 +170,7 @@ func (ctl *Example2Controller) Update() {
 
 func (ctl *Example2Controller) Delete() {
 	// 记录ID
-	ids := ctl.GetString(":id")
+	ids := ctl.GetString("id")
 	if ids == "" {
 		ctl.JSON(common.JsonResult{
 			Code: -1,
@@ -188,6 +193,10 @@ func (ctl *Example2Controller) Delete() {
 		Msg:  "删除成功",
 	})
 }
+
+
+
+
 
 func (ctl *Example2Controller) Status() {
 	// 参数绑定
@@ -213,3 +222,7 @@ func (ctl *Example2Controller) Status() {
 		Msg:  "设置成功",
 	})
 }
+
+
+
+

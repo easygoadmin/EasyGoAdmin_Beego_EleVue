@@ -32,6 +32,7 @@ import (
 	"easygoadmin/utils/gstr"
 	"errors"
 	"github.com/beego/beego/v2/client/orm"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -78,28 +79,6 @@ func makeTree(menu []models.Menu, tn *vo.MenuTreeNode) {
 		}
 	}
 }
-
-//// 数据源转换
-//func (s *menuService) MakeList(data []*vo.MenuTreeNode) map[int]string {
-//	menuList := make(map[int]string, 0)
-//	if reflect.ValueOf(data).Kind() == reflect.Slice {
-//		// 一级栏目
-//		for _, val := range data {
-//			menuList[val.Id] = val.Title
-//
-//			// 二级栏目
-//			for _, v := range val.Children {
-//				menuList[v.Id] = "|--" + v.Title
-//
-//				// 三级栏目
-//				for _, vt := range v.Children {
-//					menuList[vt.Id] = "|--|--" + vt.Title
-//				}
-//			}
-//		}
-//	}
-//	return menuList
-//}
 
 func (s *menuService) Add(req dto.MenuAddReq, userId int) (int64, error) {
 	if utils.AppDebug() {
@@ -306,23 +285,21 @@ func (s *menuService) GetPermissionMenuList(userId int) interface{} {
 		menuList, _ := Menu.GetTreeList()
 		return menuList
 	} else {
-		//// 非管理员
-		//
-		//// 数据转换
-		//list := make([]models.Menu, 0)
-		//// 查询数据
-		//utils.XormDb.Table("sys_menu").Alias("m").
-		//	Join("INNER", []string{"sys_role_menu", "r"}, "m.id = r.menu_id").
-		//	Join("INNER", []string{"sys_user_role", "ur"}, "ur.role_id=r.role_id").
-		//	Where("ur.user_id=? AND m.type=0 AND m.`status`=1 AND m.mark=1", userId).
-		//	Cols("m.*").
-		//	OrderBy("m.id asc").
-		//	Find(&list)
-		//
-		//// 数据处理
-		//var menuNode vo.MenuTreeNode
-		//makeTree(list, &menuNode)
-		//return menuNode.Children
+		// 非管理员
+		// 数据转换
+		list := make([]models.Menu, 0)
+		// 查询SQL语句
+		sql := "SELECT m.* FROM sys_menu AS m" +
+			" INNER JOIN sys_role_menu AS rm ON m.id = rm.menu_id" +
+			" INNER JOIN sys_user_role AS ur ON ur.role_id=rm.role_id" +
+			" WHERE ur.user_id=" + strconv.Itoa(userId) + " AND m.type=0 AND m.`status`=1 AND m.mark=1" +
+			" ORDER BY m.sort ASC"
+		// 执行查询并转换对象
+		orm.NewOrm().Raw(sql).QueryRows(&list)
+		// 数据处理
+		var menuNode vo.MenuTreeNode
+		makeTree(list, &menuNode)
+		return menuNode.Children
 		return nil
 	}
 }
@@ -344,8 +321,23 @@ func (s *menuService) GetPermissionsList(userId int) []string {
 		return permissionList
 	} else {
 		// 非管理员
+
+		// 实例化对象
+		list := make([]models.Menu, 0)
+		// 查询SQL语句
+		sql := "SELECT m.permission FROM sys_menu AS m" +
+			" INNER JOIN sys_role_menu AS rm ON m.id = rm.menu_id" +
+			" INNER JOIN sys_user_role AS ur ON ur.role_id=rm.role_id" +
+			" WHERE ur.user_id=" + strconv.Itoa(userId) + " AND m.type=1 AND m.`status`=1 AND m.mark=1" +
+			" ORDER BY m.sort ASC"
+		// 执行查询并转换对象
+		orm.NewOrm().Raw(sql).QueryRows(&list)
+
+		// 权限节点
 		permissionList := make([]string, 0)
-		// TODO...
+		for _, v := range list {
+			permissionList = append(permissionList, v.Permission)
+		}
 		return permissionList
 	}
 }

@@ -23,7 +23,10 @@
 
 package vo
 
-import "easygoadmin/app/models"
+import (
+	"easygoadmin/app/models"
+	"time"
+)
 
 // 用户信息Vo
 type UserListVo struct {
@@ -40,26 +43,26 @@ type UserListVo struct {
 
 // 用户信息Vo
 type UserInfoVo struct {
-	Id         int      `json:"id"`
-	Realname   string   `json:"realname"`
-	Nickname   string   `json:"nickname"`
-	Gender     int      `json:"gender"`
-	Avatar     string   `json:"avatar"`
-	Mobile     int      `json:"mobile"`
-	Email      string   `json:"email"`
-	Birthday   int64    `json:"birthday"`
-	DeptId     int      `json:"deptId"`
-	LevelId    int      `json:"levelId"`
-	PositionId int      `json:"positionId"`
-	Address    string   `json:"address"`
-	Username   string   `json:"username"`
-	Password   string   `json:"password"`
-	Intro      string   `json:"intro"`
-	Status     int      `json:"status"`
-	Note       string   `json:"note"`
-	Sort       int      `json:"sort"`
-	RoleIds    []int    `json:"roleIds"` // 角色ID
-	City       []string `json:"city"`    // 省市区
+	Id         int       `json:"id"`
+	Realname   string    `json:"realname"`
+	Nickname   string    `json:"nickname"`
+	Gender     int       `json:"gender"`
+	Avatar     string    `json:"avatar"`
+	Mobile     string    `json:"mobile"`
+	Email      string    `json:"email"`
+	Birthday   time.Time `json:"birthday"`
+	DeptId     int       `json:"deptId"`
+	LevelId    int       `json:"levelId"`
+	PositionId int       `json:"positionId"`
+	Address    string    `json:"address"`
+	Username   string    `json:"username"`
+	Password   string    `json:"password"`
+	Intro      string    `json:"intro"`
+	Status     int       `json:"status"`
+	Note       string    `json:"note"`
+	Sort       int       `json:"sort"`
+	RoleIds    []int     `json:"roleIds"` // 角色ID
+	City       []string  `json:"city"`    // 省市区
 }
 
 // 个人信息Vo

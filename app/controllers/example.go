@@ -24,7 +24,7 @@
 /**
  * 演示一管理-控制器
  * @author 半城风雨
- * @since 2022-04-15
+ * @since 2022-05-13
  * @File : example
  */
 package controllers
@@ -41,7 +41,7 @@ import (
 
 var Example = new(ExampleController)
 
-type ExampleController struct {
+type ExampleController struct{
 	BaseController
 }
 
@@ -77,7 +77,7 @@ func (ctl *ExampleController) List() {
 
 func (ctl *ExampleController) Detail() {
 	// 记录ID
-	id, _ := ctl.GetInt(":id", 0)
+	id, _ := ctl.GetInt("id", 0)
 	if id > 0 {
 		// 编辑
 		info := &models.Example{Id: id}
@@ -89,14 +89,24 @@ func (ctl *ExampleController) Detail() {
 			})
 			return
 		}
+
 		// 属性拷贝
 		var exampleInfoVo = &vo.ExampleInfoVo{}
 		utils.StructCopy(info, exampleInfoVo)
 
+		
+		
+		
 		// 头像
 		if exampleInfoVo.Avatar != "" {
 			exampleInfoVo.Avatar = utils.GetImageUrl(exampleInfoVo.Avatar)
 		}
+		
+		
+		
+		
+		
+
 		// 返回结果
 		ctl.JSON(common.JsonResult{
 			Code: 0,
@@ -168,7 +178,7 @@ func (ctl *ExampleController) Update() {
 
 func (ctl *ExampleController) Delete() {
 	// 记录ID
-	ids := ctl.GetString(":id")
+	ids := ctl.GetString("id")
 	if ids == "" {
 		ctl.JSON(common.JsonResult{
 			Code: -1,
@@ -191,6 +201,14 @@ func (ctl *ExampleController) Delete() {
 		Msg:  "删除成功",
 	})
 }
+
+
+
+
+
+
+
+
 
 func (ctl *ExampleController) Status() {
 	// 参数绑定
@@ -217,6 +235,10 @@ func (ctl *ExampleController) Status() {
 	})
 }
 
+
+
+
+
 func (ctl *ExampleController) IsVip() {
 	// 参数绑定
 	var req dto.ExampleIsVipReq
@@ -241,3 +263,7 @@ func (ctl *ExampleController) IsVip() {
 		Msg:  "设置成功",
 	})
 }
+
+
+
+

@@ -137,10 +137,11 @@ func (s *memberService) Add(req dto.MemberAddReq, userId int) (int64, error) {
 	}
 
 	// 省市区处理
-	if len(req.City) == 3 {
-		entity.ProvinceCode = req.City[0]
-		entity.CityCode = req.City[1]
-		entity.DistrictCode = req.City[2]
+	cityArr := strings.Split(req.City, ",")
+	if len(cityArr) == 3 {
+		entity.ProvinceCode = cityArr[0]
+		entity.CityCode = cityArr[1]
+		entity.DistrictCode = cityArr[2]
 	}
 
 	// 密码
@@ -190,10 +191,11 @@ func (s *memberService) Update(req dto.MemberUpdateReq, userId int) (int64, erro
 	}
 
 	// 省市区处理
-	if len(req.City) == 3 {
-		entity.ProvinceCode = req.City[0]
-		entity.CityCode = req.City[1]
-		entity.DistrictCode = req.City[2]
+	cityArr := strings.Split(req.City, ",")
+	if len(cityArr) == 3 {
+		entity.ProvinceCode = cityArr[0]
+		entity.CityCode = cityArr[1]
+		entity.DistrictCode = cityArr[2]
 	}
 
 	// 密码

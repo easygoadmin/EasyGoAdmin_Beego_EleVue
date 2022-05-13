@@ -35,25 +35,25 @@ type MemberPageReq struct {
 
 // 添加会员
 type MemberAddReq struct {
-	Username    string   `form:"username,unique" validate:"required"` // 用户名
-	Password    string   `form:"password"`                            // 登录密码
-	MemberLevel int      `form:"memberLevel" validate:"int"`          // 会员等级
-	Realname    string   `form:"realname" validate:"required"`        // 真实姓名
-	Nickname    string   `form:"nickname" validate:"required"`        // 用户昵称
-	Gender      int      `form:"gender" validate:"int"`               // 性别（1男 2女 3未知）
-	Avatar      string   `form:"avatar" validate:"required"`          // 用户头像
-	Birthday    string   `form:"birthday" validate:"required"`        // 出生日期
-	City        []string `form:"city" validate:"required"`            // 省市区
-	Address     string   `form:"address" validate:"required"`         // 详细地址
-	Intro       string   `form:"intro"`                               // 个人简介
-	Signature   string   `form:"signature"`                           // 个性签名
-	Device      int      `form:"device" validate:"int"`               // 设备类型：1苹果 2安卓 3WAP站 4PC站 5后台添加
-	Source      int      `form:"source" validate:"int"`               // 来源：1、APP注册；2、后台添加；
-	Status      int      `form:"status" validate:"int"`               // 是否启用 1、启用  2、停用
+	Username    string `form:"username,unique" validate:"required"` // 用户名
+	Password    string `form:"password"`                            // 登录密码
+	MemberLevel int    `form:"memberLevel" validate:"int"`          // 会员等级
+	Realname    string `form:"realname" validate:"required"`        // 真实姓名
+	Nickname    string `form:"nickname" validate:"required"`        // 用户昵称
+	Gender      int    `form:"gender" validate:"int"`               // 性别（1男 2女 3未知）
+	Avatar      string `form:"avatar" validate:"required"`          // 用户头像
+	Birthday    string `form:"birthday" validate:"required"`        // 出生日期
+	City        string `form:"city" validate:"required"`            // 省市区
+	Address     string `form:"address" validate:"required"`         // 详细地址
+	Intro       string `form:"intro"`                               // 个人简介
+	Signature   string `form:"signature"`                           // 个性签名
+	Device      int    `form:"device" validate:"int"`               // 设备类型：1苹果 2安卓 3WAP站 4PC站 5后台添加
+	Source      int    `form:"source" validate:"int"`               // 来源：1、APP注册；2、后台添加；
+	Status      int    `form:"status" validate:"int"`               // 是否启用 1、启用  2、停用
 }
 
 // 添加会员表单验证
-func (a MemberAddReq) Messages() map[string]string {
+func (v MemberAddReq) Messages() map[string]string {
 	return validate.MS{
 		"Username.required": "用户名不能为空.",
 		"MemberLevel.int":   "请选择会员等级.",
@@ -71,26 +71,26 @@ func (a MemberAddReq) Messages() map[string]string {
 
 // 更新会员
 type MemberUpdateReq struct {
-	Id          int      `form:"id" validate:"int"`
-	Username    string   `form:"username,unique" validate:"required"` // 用户名
-	Password    string   `form:"password"`                            // 登录密码
-	MemberLevel int      `form:"memberLevel" validate:"int"`          // 会员等级
-	Realname    string   `form:"realname" validate:"required"`        // 真实姓名
-	Nickname    string   `form:"nickname" validate:"required"`        // 用户昵称
-	Gender      int      `form:"gender" validate:"int"`               // 性别（1男 2女 3未知）
-	Avatar      string   `form:"avatar" validate:"required"`          // 用户头像
-	Birthday    string   `form:"birthday" validate:"required"`        // 出生日期
-	City        []string `form:"city" validate:"required"`            // 省市区
-	Address     string   `form:"address" validate:"required"`         // 详细地址
-	Intro       string   `form:"intro"`                               // 个人简介
-	Signature   string   `form:"signature"`                           // 个性签名
-	Device      int      `form:"device" validate:"int"`               // 设备类型：1苹果 2安卓 3WAP站 4PC站 5后台添加
-	Source      int      `form:"source" validate:"int"`               // 来源：1、APP注册；2、后台添加；
-	Status      int      `form:"status" validate:"int"`               // 是否启用 1、启用  2、停用
+	Id          int    `form:"id" validate:"int"`
+	Username    string `form:"username,unique" validate:"required"` // 用户名
+	Password    string `form:"password"`                            // 登录密码
+	MemberLevel int    `form:"memberLevel" validate:"int"`          // 会员等级
+	Realname    string `form:"realname" validate:"required"`        // 真实姓名
+	Nickname    string `form:"nickname" validate:"required"`        // 用户昵称
+	Gender      int    `form:"gender" validate:"int"`               // 性别（1男 2女 3未知）
+	Avatar      string `form:"avatar" validate:"required"`          // 用户头像
+	Birthday    string `form:"birthday" validate:"required"`        // 出生日期
+	City        string `form:"city" validate:"required"`            // 省市区
+	Address     string `form:"address" validate:"required"`         // 详细地址
+	Intro       string `form:"intro"`                               // 个人简介
+	Signature   string `form:"signature"`                           // 个性签名
+	Device      int    `form:"device" validate:"int"`               // 设备类型：1苹果 2安卓 3WAP站 4PC站 5后台添加
+	Source      int    `form:"source" validate:"int"`               // 来源：1、APP注册；2、后台添加；
+	Status      int    `form:"status" validate:"int"`               // 是否启用 1、启用  2、停用
 }
 
 // 更新会员表单验证
-func (u MemberUpdateReq) Messages() map[string]string {
+func (v MemberUpdateReq) Messages() map[string]string {
 	return validate.MS{
 		"Id.int":            "会员ID不能为空.",
 		"Username.required": "用户名不能为空.",
@@ -113,7 +113,7 @@ type MemberStatusReq struct {
 	Status int `form:"status" validate:"int"`
 }
 
-func (s MemberStatusReq) Messages() map[string]string {
+func (v MemberStatusReq) Messages() map[string]string {
 	return validate.MS{
 		"Id.int":     "会员ID不能为空.",
 		"Status.int": "请选择会员状态.",

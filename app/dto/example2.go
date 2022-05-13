@@ -21,42 +21,122 @@
 // | 法律所允许的合法合规的软件产品研发，详细声明内容请阅读《框架免责声明》附件；
 // +----------------------------------------------------------------------
 
+/**
+ * 演示二Dto
+ * @author 半城风雨
+ * @since 2022-05-13
+ * @File : example2
+ */
 package dto
+
+import "github.com/gookit/validate"
 
 // 分页查询
 type Example2PageReq struct {
-	Name string `form:"name"` // 演示名称
+	Page  int    `form:"page"`  // 页码
+	Limit int    `form:"limit"` // 每页数
 
-	Status int `form:"status"` // 状态：1正常 2停用
+	
+	Name   string `form:"name"`   // 演示名称
+	
 
-	Page  int `form:"page"`  // 页码
-	Limit int `form:"limit"` // 每页数
+	
+	Status   int    `form:"status"`   // 状态：1正常 2停用
+	
+
 }
 
 // 添加演示二
 type Example2AddReq struct {
-	Name string `form:"name" validate:"required"` // 演示名称
 
-	Status int `form:"status" validate:"int"` // 状态：1正常 2停用
+	
+	Name  string `form:"name" validate:"required"`   // 演示名称
+	
 
-	Sort int `form:"sort" validate:"int"` // 排序号
+	
+	Status  int    `form:"status" validate:"int"`    // 状态：1正常 2停用
+	
 
+	
+	Sort  int    `form:"sort" validate:"int"`    // 排序号
+	
+
+}
+
+// 添加表单验证
+func (v Example2AddReq) Messages() map[string]string {
+	return validate.MS{
+	
+		
+		"Name.required": "演示名称不能为空.", // 演示名称
+		
+	
+		
+		"Status.int":    "请选择状态.", // 状态：1正常 2停用
+		
+	
+		
+		"Sort.int":      "排序号不能为空.", // 排序号
+		
+	
+	}
 }
 
 // 编辑演示二
 type Example2UpdateReq struct {
-	Id string `form:"id" validate:"required"`
+	Id     int    `form:"id" validate:"int"`
 
-	Name string `form:"name" validate:"required"` // 演示名称
+	
+	Name  string `form:"name" validate:"required"`   // 演示名称
+	
 
-	Status int `form:"status" validate:"int"` // 状态：1正常 2停用
+	
+	Status  int    `form:"status" validate:"int"`    // 状态：1正常 2停用
+	
 
-	Sort int `form:"sort" validate:"int"` // 排序号
+	
+	Sort  int    `form:"sort" validate:"int"`    // 排序号
+	
 
 }
+
+// 更新表单验证
+func (v Example2UpdateReq) Messages() map[string]string {
+	return validate.MS{
+		"Id.int":        "记录ID不能为空.",
+	
+		
+		"Name.required": "演示名称不能为空.", // 演示名称
+		
+	
+		
+		"Status.int":    "请选择状态.", // 状态：1正常 2停用
+		
+	
+		
+		"Sort.int":      "排序号不能为空.", // 排序号
+		
+	
+	}
+}
+
+
+
+
 
 // 设置状态
 type Example2StatusReq struct {
 	Id     int `form:"id" validate:"int"`
 	Status int `form:"status" validate:"int"`
 }
+
+// 设置状态参数验证
+func (v Example2StatusReq) Messages() map[string]string {
+	return validate.MS{
+		"Id.int":     "记录ID不能为空.",
+		"Status.int": "请选择状态：1正常 2停用.",
+	}
+}
+
+
+

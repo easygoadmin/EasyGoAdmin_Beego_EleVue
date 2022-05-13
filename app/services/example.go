@@ -24,7 +24,7 @@
 /**
  * 演示一管理-服务类
  * @author 半城风雨
- * @since 2022-04-15
+ * @since 2022-05-13
  * @File : example
  */
 package services
@@ -46,7 +46,7 @@ var Example = new(exampleService)
 
 type exampleService struct{}
 
-func (s *exampleService) GetList(req dto.ExamplePageReq) ([]vo.ExampleListVo, int64, error) {
+func (s *exampleService) GetList(req dto.ExamplePageReq) ([]vo.ExampleInfoVo, int64, error) {
 	// 初始化查询实例
 	query := orm.NewOrm().QueryTable(new(models.Example)).Filter("mark", 1)
 
@@ -87,9 +87,9 @@ func (s *exampleService) GetList(req dto.ExamplePageReq) ([]vo.ExampleListVo, in
 	query.All(&lists)
 
 	// 数据处理
-	var result []vo.ExampleListVo
+	var result []vo.ExampleInfoVo
 	for _, v := range lists {
-		item := vo.ExampleListVo{}
+		item := vo.ExampleInfoVo{}
 		item.Example = v
 
 		// 头像
@@ -105,9 +105,6 @@ func (s *exampleService) GetList(req dto.ExamplePageReq) ([]vo.ExampleListVo, in
 }
 
 func (s *exampleService) Add(req dto.ExampleAddReq, userId int) (int64, error) {
-	if utils.AppDebug() {
-		return 0, errors.New("演示环境，暂无权限操作")
-	}
 	// 实例化对象
 	var entity models.Example
 
@@ -140,11 +137,8 @@ func (s *exampleService) Add(req dto.ExampleAddReq, userId int) (int64, error) {
 }
 
 func (s *exampleService) Update(req dto.ExampleUpdateReq, userId int) (int64, error) {
-	if utils.AppDebug() {
-		return 0, errors.New("演示环境，暂无权限操作")
-	}
 	// 查询记录
-	entity := &models.Example{Id: gconv.Int(req.Id)}
+	entity := &models.Example{Id: req.Id}
 	err := entity.Get()
 	if err != nil {
 		return 0, errors.New("记录不存在")
@@ -177,9 +171,6 @@ func (s *exampleService) Update(req dto.ExampleUpdateReq, userId int) (int64, er
 
 // 删除
 func (s *exampleService) Delete(ids string) (int64, error) {
-	if utils.AppDebug() {
-		return 0, errors.New("演示环境，暂无权限操作")
-	}
 	// 记录ID
 	idsArr := strings.Split(ids, ",")
 	if len(idsArr) == 1 {
@@ -206,19 +197,12 @@ func (s *exampleService) Delete(ids string) (int64, error) {
 }
 
 func (s *exampleService) Status(req dto.ExampleStatusReq, userId int) (int64, error) {
-	if utils.AppDebug() {
-		return 0, errors.New("演示环境，暂无权限操作")
-	}
 	// 查询记录是否存在
-	info := &models.Example{Id: gconv.Int(req.Id)}
-	err := info.Get()
+	entity := &models.Example{Id: req.Id}
+	err := entity.Get()
 	if err != nil {
 		return 0, errors.New("记录不存在")
 	}
-
-	// 设置状态
-	entity := &models.Example{}
-	entity.Id = info.Id
 	entity.Status = req.Status
 	entity.UpdateUser = userId
 	entity.UpdateTime = time.Now()
@@ -226,19 +210,12 @@ func (s *exampleService) Status(req dto.ExampleStatusReq, userId int) (int64, er
 }
 
 func (s *exampleService) IsVip(req dto.ExampleIsVipReq, userId int) (int64, error) {
-	if utils.AppDebug() {
-		return 0, errors.New("演示环境，暂无权限操作")
-	}
 	// 查询记录是否存在
-	info := &models.Example{Id: gconv.Int(req.Id)}
-	err := info.Get()
+	entity := &models.Example{Id: req.Id}
+	err := entity.Get()
 	if err != nil {
 		return 0, errors.New("记录不存在")
 	}
-
-	// 设置状态
-	entity := &models.Example{}
-	entity.Id = info.Id
 	entity.IsVip = req.IsVip
 	entity.UpdateUser = userId
 	entity.UpdateTime = time.Now()

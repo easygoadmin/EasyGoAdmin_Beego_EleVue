@@ -24,7 +24,7 @@
 /**
  * 演示二Vo
  * @author 半城风雨
- * @since 2022-04-15
+ * @since 2022-05-13
  * @File : example2
  */
 package vo
@@ -32,16 +32,8 @@ package vo
 import "easygoadmin/app/models"
 
 // 演示二信息Vo
-type Example2ListVo struct {
-	models.Example2
-
-	StatusName int `json:"statusName"` // 状态名称
-}
-
-// 演示一信息Vo
 type Example2InfoVo struct {
-	Id     int    `json:"id"`
-	Name   string `json:"name"`   // 演示名称
-	Status int    `json:"status"` // 状态：1正常 2停用
-	Sort   int    `json:"sort"`   // 排序号
+	models.Example2
+	
+	StatusName int `json:"statusName"` // 状态名称
 }

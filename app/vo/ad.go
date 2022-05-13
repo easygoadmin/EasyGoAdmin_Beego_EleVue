@@ -31,8 +31,8 @@ import (
 // 广告列表Vo
 type AdListVo struct {
 	models.Ad
-	TypeName   string `json:"TypeName"`   // 广告类型
-	AdSortDesc string `json:"AdSortDesc"` // 广告位描述
+	TypeName   string `json:"typeName"`   // 广告类型
+	AdSortDesc string `json:"adSortDesc"` // 广告位描述
 }
 
 // 广告信息Vo

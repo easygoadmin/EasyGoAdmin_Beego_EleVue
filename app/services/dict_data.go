@@ -94,10 +94,10 @@ func (s *dictDataService) Update(req dto.DictDataUpdateReq, userId int) (int64, 
 		return 0, err
 	}
 	// 设置对象
-	entity.DictId = gconv.Int(req.DictId)
+	entity.DictId = req.DictId
 	entity.Name = req.Name
 	entity.Code = req.Code
-	entity.Sort = gconv.Int(req.Sort)
+	entity.Sort = req.Sort
 	entity.Note = req.Note
 	entity.Status = req.Status
 	entity.UpdateUser = userId

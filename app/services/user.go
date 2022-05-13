@@ -148,9 +148,6 @@ func (s *userService) Add(req dto.UserAddReq, userId int) (int64, error) {
 	entity.DeptId = req.DeptId
 	entity.LevelId = req.LevelId
 	entity.PositionId = req.PositionId
-	entity.ProvinceCode = req.ProvinceCode
-	entity.CityCode = req.CityCode
-	entity.DistrictCode = req.DistrictCode
 	entity.Address = req.Address
 	entity.Username = req.Username
 	entity.Intro = req.Intro
@@ -162,6 +159,14 @@ func (s *userService) Add(req dto.UserAddReq, userId int) (int64, error) {
 	if req.Password != "" {
 		password, _ := utils.Md5(req.Password + req.Username)
 		entity.Password = password
+	}
+
+	// 省市区处理
+	cityArr := strings.Split(req.City, ",")
+	if len(cityArr) == 3 {
+		entity.ProvinceCode = cityArr[0]
+		entity.CityCode = cityArr[1]
+		entity.DistrictCode = cityArr[2]
 	}
 
 	// 头像处理
@@ -221,9 +226,6 @@ func (s *userService) Update(req dto.UserUpdateReq, userId int) (int64, error) {
 	entity.DeptId = req.DeptId
 	entity.LevelId = req.LevelId
 	entity.PositionId = req.PositionId
-	entity.ProvinceCode = req.ProvinceCode
-	entity.CityCode = req.CityCode
-	entity.DistrictCode = req.DistrictCode
 	entity.Address = req.Address
 	entity.Username = req.Username
 	entity.Intro = req.Intro
@@ -235,6 +237,14 @@ func (s *userService) Update(req dto.UserUpdateReq, userId int) (int64, error) {
 	if req.Password != "" {
 		password, _ := utils.Md5(req.Password + req.Username)
 		entity.Password = password
+	}
+
+	// 省市区处理
+	cityArr := strings.Split(req.City, ",")
+	if len(cityArr) == 3 {
+		entity.ProvinceCode = cityArr[0]
+		entity.CityCode = cityArr[1]
+		entity.DistrictCode = cityArr[2]
 	}
 
 	// 头像处理
