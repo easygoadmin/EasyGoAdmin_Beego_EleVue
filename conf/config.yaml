@@ -15,7 +15,7 @@ mysql:
 # 文件上传
 attachment:
   # 文件存储路径
-  file_path: 'D:\\RXThinkCMF\\uploads'
+  file_path: 'D:\\uploads'
   # 上传文件最大值
   file_size: 52428800
   # 允许上传文件后缀
